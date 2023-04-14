@@ -1,31 +1,48 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Vue Router Sample</title>
+    <title>Vue Nested Router</title>
 </head>
 <body>
 <div id="app">
-    <h1>뷰 라우터 예</h1>
-    <p>
-        <router-link to="/main">Main 컴포넌트로 이동</router-link>
-        <router-link to="/login">Login 컴포넌트로 이동</router-link>
-    </p>
     <router-view></router-view>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
 <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
 <script>
-    var Main = { 
-        template: '<div>main</div>' 
+    var User = {
+        template: `
+            <div>
+                User Component
+                <router-view></router-view>
+            </div>
+        `
     };
-    var Login = { 
-        template: '<div>login</div>' 
+
+    var UserProfile = {
+        template: '<p>User Profile Component</p>'
+    };
+
+    var UserPost = {
+        template: '<p>User Post Component</p>'
     };
 
     var routes = [
-        { path: '/main', component: Main },
-        { path: '/login', component: Login },
+        {
+            path: '/user',
+            component: User,
+            children: [
+                {
+                    path: 'posts',
+                    component: UserPost
+                },
+                {
+                    path: 'profile',
+                    component: UserProfile
+                }
+            ]
+        }
     ];
 
     var router = new VueRouter({
